@@ -26,7 +26,8 @@ def get_scope_client_configs(view: sublime.View,
             point = sel[0].begin()
 
     languages = view.settings().get('lsp_language', None)
-    scope_configs = []  # type: List[Tuple[ClientConfig, Optional[int]]]
+    # scope_configs = []  # type: List[Tuple[ClientConfig, Optional[int]]]
+    scope_configs = []
 
     for config in configs:
         if config.enabled:
