@@ -19,11 +19,11 @@
         "command": "lsp_setup_language_server",
         "args": {}
     },
-    {
-        "caption": "LSP: Enable Language Server Globally",
-        "command": "lsp_enable_language_server_globally",
-        "args": {}
-    },
+    // {
+    //     "caption": "LSP: Enable Language Server Globally",
+    //     "command": "lsp_enable_language_server_globally",
+    //     "args": {}
+    // },
     {
         "caption": "LSP: Disable Language Server Globally",
         "command": "lsp_disable_language_server_globally",
