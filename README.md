@@ -4,7 +4,7 @@ Language Server Protocol support for Sublime Text 3 that gives you IDE [features
 
 ## Modify
 
-Use mistune instead mdpopups.
+Use [mistune](https://github.com/lepture/mistune) instead [mdpopups](https://github.com/facelessuser/sublime-markdown-popups).
 
 ## Installation
 
