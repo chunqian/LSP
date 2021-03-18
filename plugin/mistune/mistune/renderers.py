@@ -181,9 +181,9 @@ class HTMLRenderer(BaseRenderer):
             lang = info.split(None, 1)[0]
             lang = escape_html(lang)
             html += ' class="language-' + lang + '"'
-            html += ' style="font-family: Fixedsys Excelsior"'
+            html += ' style="font-family: IBM Plex Mono"'
         else:
-            html += ' style="font-family: Fixedsys Excelsior"'
+            html += ' style="font-family: IBM Plex Mono"'
         print_content = code.replace("'", "\"")
         code = escape(code, quote=False).replace("\n", "<br />")
         # return html + '>' + code + '</code></pre></p>\n'
