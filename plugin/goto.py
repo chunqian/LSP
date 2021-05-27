@@ -1,5 +1,5 @@
 import sublime
-from Default.history_list import get_jump_history_for_view
+# from Default.history_list import get_jump_history_for_view
 from .core.documents import get_position, is_at_word
 from .core.logging import debug
 from .core.protocol import Request, Point
@@ -74,8 +74,10 @@ class LspGotoCommand(LspTextCommand):
         view = self.view
         if response:
             # Save to jump back history.
-            get_jump_history_for_view(view).push_selection(view)
+            # get_jump_history_for_view(view).push_selection(view)
             # TODO: DocumentLink support.
+            if len(view.sel()) > 0:
+                view.run_command("add_jump_record", {"selection": [(r.a, r.b) for r in view.sel()]})
             if isinstance(response, dict):
                 locations = [process_response(response)]
             else:

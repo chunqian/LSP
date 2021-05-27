@@ -39,16 +39,16 @@
         "command": "lsp_disable_language_server_in_project",
         "args": {}
     },
-    {
-    	"caption": "LSP: Format Document",
-    	"command": "lsp_format_document",
-    	"args": {}
-    },
-    {
-        "caption": "LSP: Format Selection",
-        "command": "lsp_format_document_range",
-        "args": {}
-    },
+    // {
+    // 	"caption": "LSP: Format Document",
+    // 	"command": "lsp_format_document",
+    // 	"args": {}
+    // },
+    // {
+    //     "caption": "LSP: Format Selection",
+    //     "command": "lsp_format_document_range",
+    //     "args": {}
+    // },
     {
         "caption": "LSP: Restart Servers",
         "command": "lsp_restart_client",
