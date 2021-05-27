@@ -24,11 +24,11 @@
     //     "command": "lsp_enable_language_server_globally",
     //     "args": {}
     // },
-    {
-        "caption": "LSP: Disable Language Server Globally",
-        "command": "lsp_disable_language_server_globally",
-        "args": {}
-    },
+    // {
+    //     "caption": "LSP: Disable Language Server Globally",
+    //     "command": "lsp_disable_language_server_globally",
+    //     "args": {}
+    // },
     {
         "caption": "LSP: Enable Language Server in Project",
         "command": "lsp_enable_language_server_in_project",
@@ -63,25 +63,25 @@
         "caption": "LSP: Toggle Log Panel",
         "command": "lsp_toggle_server_panel",
     },
-    {
-        "caption": "LSP: Toggle Diagnostics Panel",
-        "command": "lsp_show_diagnostics_panel"
-    },
-    {
-        "caption": "LSP: Clear Diagnostics",
-        "command": "lsp_clear_diagnostics",
-        "args": {}
-    },
-    {
-        "caption": "LSP: Next Diagnostic",
-        "command": "lsp_next_diagnostic",
-        "args": {}
-    },
-    {
-        "caption": "LSP: Previous Diagnostic",
-        "command": "lsp_previous_diagnostic",
-        "args": {}
-    },
+    // {
+    //     "caption": "LSP: Toggle Diagnostics Panel",
+    //     "command": "lsp_show_diagnostics_panel"
+    // },
+    // {
+    //     "caption": "LSP: Clear Diagnostics",
+    //     "command": "lsp_clear_diagnostics",
+    //     "args": {}
+    // },
+    // {
+    //     "caption": "LSP: Next Diagnostic",
+    //     "command": "lsp_next_diagnostic",
+    //     "args": {}
+    // },
+    // {
+    //     "caption": "LSP: Previous Diagnostic",
+    //     "command": "lsp_previous_diagnostic",
+    //     "args": {}
+    // },
     {
         "caption": "LSP: Workspace Symbol",
         "command": "lsp_workspace_symbols"
