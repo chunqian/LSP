@@ -13,10 +13,10 @@ from .core.typing import List, Dict, Optional, Tuple
 from .core.views import range_to_region, region_to_range
 
 diagnostic_severity_names = {
-    DiagnosticSeverity.Error: "error",
-    DiagnosticSeverity.Warning: "warning",
-    DiagnosticSeverity.Information: "info",
-    DiagnosticSeverity.Hint: "hint"
+    DiagnosticSeverity.Error: "ERROR",
+    DiagnosticSeverity.Warning: "WARNING",
+    DiagnosticSeverity.Information: "INFO",
+    DiagnosticSeverity.Hint: "HINT"
 }
 
 diagnostic_severity_scopes = {
@@ -96,7 +96,7 @@ class DiagnosticsCursorListener(LSPViewEventListener):
 
         if get_message_logging() != diagnostic.message:
             message = diagnostic.message.replace("\n", " ")
-            printf(message)
+            printf(message, prefix = format_severity(diagnostic.severity))
             set_message_logging(diagnostic.message)
 
     def clear_diagnostics_status(self) -> None:
