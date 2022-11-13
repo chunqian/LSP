@@ -1,4 +1,4 @@
-from .util import escape, escape_html
+from .util import escape, escape_html, url_encode
 
 
 class BaseRenderer(object):
@@ -185,14 +185,27 @@ class HTMLRenderer(BaseRenderer):
         return text
 
     def block_code(self, code, info=None):
-        html = '<pre><code'
+        html = '<p><pre><code'
         if info is not None:
             info = info.strip()
         if info:
             lang = info.split(None, 1)[0]
             lang = escape_html(lang)
             html += ' class="language-' + lang + '"'
-        return html + '>' + escape(code) + '</code></pre>\n'
+        html += ' style="font-family: IBM Plex Mono"'
+        print_content = code.replace("'", "\"")
+        code = escape(code, quote=False).replace("\n", "<br />")
+        return html + '>' + code + '</code></pre></p>\n' + '<p><a href=\'' + url_encode(print_content) + '\'>Print</a></p>\n'
+
+    # def block_code(self, code, info=None):
+    #     html = '<pre><code'
+    #     if info is not None:
+    #         info = info.strip()
+    #     if info:
+    #         lang = info.split(None, 1)[0]
+    #         lang = escape_html(lang)
+    #         html += ' class="language-' + lang + '"'
+    #     return html + '>' + escape(code) + '</code></pre>\n'
 
     def block_quote(self, text):
         return '<blockquote>\n' + text + '</blockquote>\n'
