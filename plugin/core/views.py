@@ -33,10 +33,11 @@ from .types import ClientConfig
 from .typing import Callable, Optional, Dict, Any, Iterable, List, Union, Tuple, cast
 from .url import parse_uri
 from .workspace import is_subpath_of
+from .. import mistune
 import html
 import itertools
 import linecache
-import mdpopups
+# import mdpopups
 import os
 import re
 import sublime
@@ -611,18 +612,25 @@ def show_lsp_popup(view: sublime.View, contents: str, location: int = -1, md: bo
     css = css if css is not None else lsp_css().popups
     wrapper_class = wrapper_class if wrapper_class is not None else lsp_css().popups_classname
     contents += LSP_POPUP_SPACER_HTML
-    mdpopups.show_popup(
-        view,
+    # mdpopups.show_popup(
+    #     view,
+    #     contents,
+    #     css=css,
+    #     md=md,
+    #     flags=flags,
+    #     location=location,
+    #     wrapper_class=wrapper_class,
+    #     max_width=int(view.em_width() * float(userprefs().popup_max_characters_width)),
+    #     max_height=int(view.line_height() * float(userprefs().popup_max_characters_height)),
+    #     on_navigate=on_navigate,
+    #     on_hide=on_hide)
+    view.show_popup(
         contents,
-        css=css,
-        md=md,
-        flags=flags,
+        flags=sublime.HIDE_ON_MOUSE_MOVE_AWAY,
         location=location,
-        wrapper_class=wrapper_class,
-        max_width=int(view.em_width() * float(userprefs().popup_max_characters_width)),
-        max_height=int(view.line_height() * float(userprefs().popup_max_characters_height)),
-        on_navigate=on_navigate,
-        on_hide=on_hide)
+        max_width=800,
+        on_hide=on_hide,
+        on_navigate=on_navigate)
 
 
 def update_lsp_popup(view: sublime.View, contents: str, md: bool = False, css: Optional[str] = None,
@@ -630,7 +638,8 @@ def update_lsp_popup(view: sublime.View, contents: str, md: bool = False, css: O
     css = css if css is not None else lsp_css().popups
     wrapper_class = wrapper_class if wrapper_class is not None else lsp_css().popups_classname
     contents += LSP_POPUP_SPACER_HTML
-    mdpopups.update_popup(view, contents, css=css, md=md, wrapper_class=wrapper_class)
+    # mdpopups.update_popup(view, contents, css=css, md=md, wrapper_class=wrapper_class)
+    view.update_popup(contents)
 
 
 FORMAT_STRING = 0x1
@@ -736,7 +745,8 @@ def minihtml(
             frontmatter["language_map"] = language_id_map
         # Workaround CommonMark deficiency: two spaces followed by a newline should result in a new paragraph.
         result = re.sub('(\\S)  \n', '\\1\n\n', result)
-        return mdpopups.md2html(view, mdpopups.format_frontmatter(frontmatter) + result)
+        # return mdpopups.md2html(view, mdpopups.format_frontmatter(frontmatter) + result)
+        return mistune.html(result)
 
 
 REPLACEMENT_MAP = {

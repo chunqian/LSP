@@ -1,4 +1,3 @@
-from ...third_party import WebsocketServer  # type: ignore
 from .configurations import WindowConfigManager
 from .diagnostics_storage import is_severity_included
 from .logging import debug
@@ -312,7 +311,6 @@ class WindowManager(Manager):
     def _create_logger(self, config_name: str) -> Logger:
         logger_map = {
             "panel": PanelLogger,
-            "remote": RemoteLogger,
         }
         loggers = []
         for logger_type in userprefs().log_server:
@@ -623,144 +621,6 @@ class PanelLogger(Logger):
 
     def _format_notification(self, direction: str, method: str) -> str:
         return "{} {} {}".format(direction, self._server_name, method)
-
-
-class RemoteLogger(Logger):
-    PORT = 9981
-    DIRECTION_OUTGOING = 1
-    DIRECTION_INCOMING = 2
-    _ws_server = None  # type: Optional[WebsocketServer]
-    _ws_server_thread = None  # type: Optional[threading.Thread]
-    _last_id = 0
-
-    def __init__(self, manager: WindowManager, server_name: str) -> None:
-        RemoteLogger._last_id += 1
-        self._server_name = '{} ({})'.format(server_name, RemoteLogger._last_id)
-        if not RemoteLogger._ws_server:
-            try:
-                RemoteLogger._ws_server = WebsocketServer(self.PORT)
-                RemoteLogger._ws_server.set_fn_new_client(self._on_new_client)
-                RemoteLogger._ws_server.set_fn_client_left(self._on_client_left)
-                RemoteLogger._ws_server.set_fn_message_received(self._on_message_received)
-                self._start_server()
-            except OSError as ex:
-                if ex.errno == 48:  # Address already in use
-                    debug('WebsocketServer not started - address already in use')
-                    RemoteLogger._ws_server = None
-                else:
-                    raise ex
-
-    def _start_server(self) -> None:
-        def start_async() -> None:
-            if RemoteLogger._ws_server:
-                RemoteLogger._ws_server.run_forever()
-        RemoteLogger._ws_server_thread = threading.Thread(target=start_async)
-        RemoteLogger._ws_server_thread.start()
-
-    def _stop_server(self) -> None:
-        if RemoteLogger._ws_server:
-            RemoteLogger._ws_server.shutdown()
-            RemoteLogger._ws_server = None
-            if RemoteLogger._ws_server_thread:
-                RemoteLogger._ws_server_thread.join()
-                RemoteLogger._ws_server_thread = None
-
-    def _on_new_client(self, client: Dict, server: WebsocketServer) -> None:
-        """Called for every client connecting (after handshake)."""
-        debug("New client connected and was given id %d" % client['id'])
-        # server.send_message_to_all("Hey all, a new client has joined us")
-
-    def _on_client_left(self, client: Dict, server: WebsocketServer) -> None:
-        """Called for every client disconnecting."""
-        debug("Client(%d) disconnected" % client['id'])
-
-    def _on_message_received(self, client: Dict, server: WebsocketServer, message: str) -> None:
-        """Called when a client sends a message."""
-        debug("Client(%d) said: %s" % (client['id'], message))
-
-    def stderr_message(self, message: str) -> None:
-        self._broadcast_json({
-            'server': self._server_name,
-            'time': round(time() * 1000),
-            'method': 'stderr',
-            'params': message,
-            'isError': True,
-            'direction': self.DIRECTION_INCOMING,
-        })
-
-    def outgoing_request(self, request_id: int, method: str, params: Any) -> None:
-        self._broadcast_json({
-            'server': self._server_name,
-            'id': request_id,
-            'time': round(time() * 1000),
-            'method': method,
-            'params': params,
-            'direction': self.DIRECTION_OUTGOING,
-        })
-
-    def incoming_response(self, request_id: int, params: Any, is_error: bool) -> None:
-        self._broadcast_json({
-            'server': self._server_name,
-            'id': request_id,
-            'time': round(time() * 1000),
-            'params': params,
-            'direction': self.DIRECTION_INCOMING,
-            'isError': is_error,
-        })
-
-    def incoming_request(self, request_id: Any, method: str, params: Any) -> None:
-        self._broadcast_json({
-            'server': self._server_name,
-            'id': request_id,
-            'time': round(time() * 1000),
-            'method': method,
-            'params': params,
-            'direction': self.DIRECTION_INCOMING,
-        })
-
-    def outgoing_response(self, request_id: Any, params: Any) -> None:
-        self._broadcast_json({
-            'server': self._server_name,
-            'id': request_id,
-            'time': round(time() * 1000),
-            'params': params,
-            'direction': self.DIRECTION_OUTGOING,
-        })
-
-    def outgoing_error_response(self, request_id: Any, error: Error) -> None:
-        self._broadcast_json({
-            'server': self._server_name,
-            'id': request_id,
-            'isError': True,
-            'params': error.to_lsp(),
-            'time': round(time() * 1000),
-            'direction': self.DIRECTION_OUTGOING,
-        })
-
-    def outgoing_notification(self, method: str, params: Any) -> None:
-        self._broadcast_json({
-            'server': self._server_name,
-            'time': round(time() * 1000),
-            'method': method,
-            'params': params,
-            'direction': self.DIRECTION_OUTGOING,
-        })
-
-    def incoming_notification(self, method: str, params: Any, unhandled: bool) -> None:
-        self._broadcast_json({
-            'server': self._server_name,
-            'time': round(time() * 1000),
-            'error': 'Unhandled notification!' if unhandled else None,
-            'method': method,
-            'params': params,
-            'direction': self.DIRECTION_INCOMING,
-        })
-
-    def _broadcast_json(self, data: Dict[str, Any]) -> None:
-        if RemoteLogger._ws_server:
-            json_data = json.dumps(data, sort_keys=True, check_circular=False, separators=(',', ':'))
-            RemoteLogger._ws_server.send_message_to_all(json_data)
-
 
 class RouterLogger(Logger):
     def __init__(self) -> None:

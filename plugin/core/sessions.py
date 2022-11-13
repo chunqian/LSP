@@ -83,8 +83,9 @@ from abc import ABCMeta
 from abc import abstractmethod
 from abc import abstractproperty
 from weakref import WeakSet
+from .. import mistune
 import functools
-import mdpopups
+# import mdpopups
 import os
 import sublime
 import weakref
@@ -229,7 +230,8 @@ def get_initialize_params(variables: Dict[str, str], workspace_folders: List[Wor
         "markdown": {
             # https://python-markdown.github.io
             "parser": "Python-Markdown",
-            "version": mdpopups.markdown.__version__  # type: ignore
+            # "version": mdpopups.markdown.__version__  # type: ignore
+            "version": mistune.__version__  # type: ignore
         }
     }  # type: GeneralClientCapabilities
     text_document_capabilities = {
