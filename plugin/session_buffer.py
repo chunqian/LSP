@@ -64,9 +64,12 @@ class DiagnosticSeverityData:
         self.regions = []  # type: List[sublime.Region]
         self.regions_with_tag = {}  # type: Dict[int, List[sublime.Region]]
         self.annotations = []  # type: List[str]
-        _, _, self.scope, self.icon, _, _ = DIAGNOSTIC_SEVERITY[severity - 1]
-        if userprefs().diagnostics_gutter_marker != "sign":
-            self.icon = "" if severity == DiagnosticSeverity.Hint else userprefs().diagnostics_gutter_marker
+        # 不显示 gutter icon
+        _, _, self.scope, _, _, _ = DIAGNOSTIC_SEVERITY[severity - 1]
+        self.icon = ""
+        # _, _, self.scope, self.icon, _, _ = DIAGNOSTIC_SEVERITY[severity - 1]
+        # if userprefs().diagnostics_gutter_marker != "sign":
+        #     self.icon = "" if severity == DiagnosticSeverity.Hint else userprefs().diagnostics_gutter_marker
 
 
 class SemanticTokensData:

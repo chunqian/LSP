@@ -360,11 +360,13 @@ class SessionView:
     # --- textDocument/codeLens ----------------------------------------------------------------------------------------
 
     def start_code_lenses_async(self) -> None:
-        params = {'textDocument': text_document_identifier(self.view)}
-        for request_id, request in self.active_requests.items():
-            if request.method == "codeAction/resolve":
-                self.session.send_notification(Notification("$/cancelRequest", {"id": request_id}))
-        self.session.send_request_async(Request("textDocument/codeLens", params, self.view), self._on_code_lenses_async)
+        # 不执行 Code Len
+        # params = {'textDocument': text_document_identifier(self.view)}
+        # for request_id, request in self.active_requests.items():
+        #     if request.method == "codeAction/resolve":
+        #         self.session.send_notification(Notification("$/cancelRequest", {"id": request_id}))
+        # self.session.send_request_async(Request("textDocument/codeLens", params, self.view), self._on_code_lenses_async)
+        pass
 
     def _on_code_lenses_async(self, response: Optional[List[CodeLens]]) -> None:
         if not self._is_listener_alive() or not isinstance(response, list):
