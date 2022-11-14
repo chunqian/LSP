@@ -204,7 +204,8 @@ class ProcessTransport(Transport[T]):
                 if self._closed:
                     # None message already posted, just return
                     return
-                message = self._stderr.readline().decode('utf-8', 'replace')
+                # message = self._stderr.readline().decode('utf-8', 'replace')
+                message = self._stderr.readline().decode('utf-8', 'ignore')
                 if message == '':
                     continue
                 callback_object = self._callback_object()

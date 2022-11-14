@@ -286,35 +286,40 @@ class LspHoverCommand(LspTextCommand):
         sublime.set_timeout(lambda: self._show_hover(listener, point, only_diagnostics))
 
     def _show_hover(self, listener: AbstractViewListener, point: int, only_diagnostics: bool) -> None:
+        # 不显示 Quick Fix
+        # 不显示 Link
         hover_content = self.hover_content()
-        contents = self.diagnostics_content() + hover_content + code_actions_content(self._actions_by_config)
-        link_content, link_range = self.link_content_and_range()
-        only_link_content = not bool(contents) and link_range is not None
-        prefs = userprefs()
-        if prefs.show_symbol_action_links and contents and not only_diagnostics and hover_content:
-            symbol_actions_content = self.symbol_actions_content(listener, point)
-            if link_content:
-                if symbol_actions_content:
-                    symbol_actions_content += ' | '
-                symbol_actions_content += link_content
-            if symbol_actions_content:
-                contents += '<div class="actions">' + symbol_actions_content + '</div>'
-        elif link_content:
-            contents += '<div class="{}">{}</div>'.format('link with-padding' if contents else 'link', link_content)
+        contents = self.diagnostics_content() + hover_content
+        
+        # hover_content = self.hover_content()
+        # contents = self.diagnostics_content() + hover_content + code_actions_content(self._actions_by_config)
+        # link_content, link_range = self.link_content_and_range()
+        # only_link_content = not bool(contents) and link_range is not None
+        # prefs = userprefs()
+        # if prefs.show_symbol_action_links and contents and not only_diagnostics and hover_content:
+        #     symbol_actions_content = self.symbol_actions_content(listener, point)
+        #     if link_content:
+        #         if symbol_actions_content:
+        #             symbol_actions_content += ' | '
+        #         symbol_actions_content += link_content
+        #     if symbol_actions_content:
+        #         contents += '<div class="actions">' + symbol_actions_content + '</div>'
+        # elif link_content:
+        #     contents += '<div class="{}">{}</div>'.format('link with-padding' if contents else 'link', link_content)
 
         _test_contents.clear()
         _test_contents.append(contents)  # for testing only
 
         if contents:
-            if prefs.hover_highlight_style:
-                hover_range = link_range if only_link_content else self.hover_range()
-                if hover_range:
-                    _, flags = prefs.highlight_style_region_flags(prefs.hover_highlight_style)
-                    self.view.add_regions(
-                        HOVER_HIGHLIGHT_KEY,
-                        regions=[hover_range],
-                        scope="region.cyanish markup.highlight.hover.lsp",
-                        flags=flags)
+            # if prefs.hover_highlight_style:
+            #     hover_range = link_range if only_link_content else self.hover_range()
+            #     if hover_range:
+            #         _, flags = prefs.highlight_style_region_flags(prefs.hover_highlight_style)
+            #         self.view.add_regions(
+            #             HOVER_HIGHLIGHT_KEY,
+            #             regions=[hover_range],
+            #             scope="region.cyanish markup.highlight.hover.lsp",
+            #             flags=flags)
             if self.view.is_popup_visible():
                 update_lsp_popup(self.view, contents)
             else:

@@ -692,7 +692,9 @@ def minihtml(
             value = ""
             language = None
             if isinstance(item, str):
-                value = item
+                # value = item
+                # 不显示 Hover Doc
+                continue
             else:
                 value = item.get("value") or ""
                 language = item.get("language")
