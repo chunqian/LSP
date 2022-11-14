@@ -143,10 +143,11 @@ class LspHoverCommand(LspTextCommand):
                 hover_point, userprefs().show_diagnostics_severity_level)
             if self._diagnostics_by_config:
                 self.show_hover(listener, hover_point, only_diagnostics)
-            if not only_diagnostics and userprefs().show_code_actions_in_hover:
-                actions_manager \
-                    .request_for_region_async(self.view, covering, self._diagnostics_by_config, manual=False) \
-                    .then(lambda results: self._handle_code_actions(listener, hover_point, results))
+            # 不执行 Code Action
+            # if not only_diagnostics and userprefs().show_code_actions_in_hover:
+            #     actions_manager \
+            #         .request_for_region_async(self.view, covering, self._diagnostics_by_config, manual=False) \
+            #         .then(lambda results: self._handle_code_actions(listener, hover_point, results))
 
         sublime.set_timeout_async(run_async)
 

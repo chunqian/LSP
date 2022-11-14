@@ -597,10 +597,12 @@ class DocumentSyncListener(sublime_plugin.ViewEventListener, AbstractViewListene
     # --- textDocument/codeAction --------------------------------------------------------------------------------------
 
     def _do_code_actions_async(self) -> None:
-        diagnostics_by_config, covering = self.diagnostics_intersecting_async(self._stored_region)
-        actions_manager \
-            .request_for_region_async(self.view, covering, diagnostics_by_config, manual=False) \
-            .then(self._on_code_actions)
+        # 不执行 Code Action
+        # diagnostics_by_config, covering = self.diagnostics_intersecting_async(self._stored_region)
+        # actions_manager \
+        #     .request_for_region_async(self.view, covering, diagnostics_by_config, manual=False) \
+        #     .then(self._on_code_actions)
+        pass
 
     def _on_code_actions(self, responses: List[CodeActionsByConfigName]) -> None:
         # flatten list
@@ -669,11 +671,13 @@ class DocumentSyncListener(sublime_plugin.ViewEventListener, AbstractViewListene
         self._do_code_lenses_async()
 
     def _do_code_lenses_async(self) -> None:
-        session = self.session_async("codeLensProvider")
-        if session and session.uses_plugin():
-            for sv in self.session_views_async():
-                if sv.session == session:
-                    sv.start_code_lenses_async()
+        # 不执行 Code Len
+        # session = self.session_async("codeLensProvider")
+        # if session and session.uses_plugin():
+        #     for sv in self.session_views_async():
+        #         if sv.session == session:
+        #             sv.start_code_lenses_async()
+        pass
 
     def _resolve_visible_code_lenses_async(self) -> None:
         session = self.session_async("codeLensProvider")
@@ -703,15 +707,17 @@ class DocumentSyncListener(sublime_plugin.ViewEventListener, AbstractViewListene
         return False
 
     def _do_highlights_async(self) -> None:
-        region = first_selection_region(self.view)
-        if region is None:
-            return
-        point = region.b
-        session = self.session_async("documentHighlightProvider", point)
-        if session:
-            params = text_document_position_params(self.view, point)
-            request = Request.documentHighlight(params, self.view)
-            session.send_request_async(request, self._on_highlights)
+        # 不执行 Document Highlight
+        # region = first_selection_region(self.view)
+        # if region is None:
+        #     return
+        # point = region.b
+        # session = self.session_async("documentHighlightProvider", point)
+        # if session:
+        #     params = text_document_position_params(self.view, point)
+        #     request = Request.documentHighlight(params, self.view)
+        #     session.send_request_async(request, self._on_highlights)
+        pass
 
     def _on_highlights(self, response: Optional[List[DocumentHighlight]]) -> None:
         if not isinstance(response, list):

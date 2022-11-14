@@ -361,11 +361,13 @@ class SessionBuffer:
     # --- textDocument/documentLink ------------------------------------------------------------------------------------
 
     def _do_document_link_async(self, view: sublime.View, version: int) -> None:
-        if self.session.has_capability("documentLinkProvider"):
-            self.session.send_request_async(
-                Request.documentLink({'textDocument': text_document_identifier(view)}, view),
-                self._if_view_unchanged(self._on_document_link_async, version)
-            )
+        # 不执行 Document Link
+        # if self.session.has_capability("documentLinkProvider"):
+        #     self.session.send_request_async(
+        #         Request.documentLink({'textDocument': text_document_identifier(view)}, view),
+        #         self._if_view_unchanged(self._on_document_link_async, version)
+        #     )
+        pass
 
     def _on_document_link_async(self, view: sublime.View, response: Optional[List[DocumentLink]]) -> None:
         self.document_links = response or []
@@ -605,15 +607,17 @@ class SessionBuffer:
     # --- textDocument/inlayHint ----------------------------------------------------------------------------------
 
     def do_inlay_hints_async(self, view: sublime.View) -> None:
-        if not userprefs().show_inlay_hints:
-            return
-        if not self.session.has_capability("inlayHintProvider"):
-            return
-        params = {
-            "textDocument": text_document_identifier(view),
-            "range": entire_content_range(view)
-        }  # type: InlayHintParams
-        self.session.send_request_async(Request.inlayHint(params, view), self._on_inlay_hints_async)
+        # 不执行 Inlay Hint
+        # if not userprefs().show_inlay_hints:
+        #     return
+        # if not self.session.has_capability("inlayHintProvider"):
+        #     return
+        # params = {
+        #     "textDocument": text_document_identifier(view),
+        #     "range": entire_content_range(view)
+        # }  # type: InlayHintParams
+        # self.session.send_request_async(Request.inlayHint(params, view), self._on_inlay_hints_async)
+        pass
 
     def _on_inlay_hints_async(self, response: Union[List[InlayHint], None]) -> None:
         if response:
