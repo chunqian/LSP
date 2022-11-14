@@ -40,6 +40,7 @@ from .core.views import unpack_href_location
 from .core.views import update_lsp_popup
 from .session_view import HOVER_HIGHLIGHT_KEY
 from functools import partial
+from html.parser import HTMLParser
 import html
 import sublime
 
@@ -331,6 +332,14 @@ class LspHoverCommand(LspTextCommand):
                     on_navigate=lambda href: self._on_navigate(href, point),
                     on_hide=lambda: self.view.erase_regions(HOVER_HIGHLIGHT_KEY))
 
+    def url_decode(self, s, quote=True):
+        s = s.replace("%26", "&")
+        s = s.replace("%3C", "<")
+        s = s.replace("%3E", ">")
+        if quote:
+            s = s.replace('%22', '"')
+        return s
+
     def _on_navigate(self, href: str, point: int) -> None:
         if href.startswith("subl:"):
             pass
@@ -373,7 +382,10 @@ class LspHoverCommand(LspTextCommand):
                 r = {"start": position, "end": position}  # type: Range
                 sublime.set_timeout_async(partial(session.open_uri_async, uri, r))
         else:
-            open_in_browser(href)
+            # 控制台打印 Hover result
+            print(HTMLParser().unescape(self.url_decode(href)))
+            self.view.hide_popup()
+            # open_in_browser(href)
 
     def handle_code_action_select(self, config_name: str, actions: List[CodeActionOrCommand], index: int) -> None:
         if index == -1:

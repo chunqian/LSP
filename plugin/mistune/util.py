@@ -1,10 +1,6 @@
-try:
-    from urllib.parse import quote
-    import html
-    from html.parser import HTMLParser
-except ImportError:
-    from urllib import quote
-    html = None
+from urllib.parse import quote
+from html.parser import HTMLParser
+import html
 
 
 PUNCTUATION = r'''\\!"#$%&'()*+,./:;<=>?@\[\]^`{}|_~-'''
