@@ -151,19 +151,22 @@ class CodeLensView:
         return sublime.Region(line.a + offset, line.b)
 
     def render(self, mode: str) -> None:
-        if mode == 'phantom':
-            phantoms = []
-            for key, group in self._code_lenses.items():
-                region = sublime.Region(*key)
-                phantom_region = self._get_phantom_region(region)
-                html = '<body id="lsp-code-lens">{}</body>'.format(
-                    '\n<small style="font-family: system">|</small>\n'.join(lens.small_html for lens in group))
-                phantoms.append(sublime.Phantom(phantom_region, html, sublime.LAYOUT_BELOW))
-            self._phantom.update(phantoms)
-        else:  # 'annotation'
-            accent = self.view.style_for_scope("region.greenish markup.accent.codelens.lsp")["foreground"]
-            for index, lens in enumerate(self._flat_iteration()):
-                self.view.add_regions(self._region_key(index), [lens.region], "", "", 0, [lens.small_html], accent)
+        # if mode == 'phantom':
+        #     phantoms = []
+        #     for key, group in self._code_lenses.items():
+        #         region = sublime.Region(*key)
+        #         phantom_region = self._get_phantom_region(region)
+        #         html = '<body id="lsp-code-lens">{}</body>'.format(
+        #             '\n<small style="font-family: system">|</small>\n'.join(lens.small_html for lens in group))
+        #         phantoms.append(sublime.Phantom(phantom_region, html, sublime.LAYOUT_BELOW))
+        #     self._phantom.update(phantoms)
+        # else:  # 'annotation'
+        #     accent = self.view.style_for_scope("region.greenish markup.accent.codelens.lsp")["foreground"]
+        #     for index, lens in enumerate(self._flat_iteration()):
+        #         self.view.add_regions(self._region_key(index), [lens.region], "", "", 0, [lens.small_html], accent)
+
+        # 不显示 Code Lens
+        pass
 
     def get_resolved_code_lenses_for_region(self, region: sublime.Region) -> Generator[CodeLensExtended, None, None]:
         region = self.view.line(region)
