@@ -25,26 +25,14 @@
       "default": "// SublimeText base scope -> LSP Language ID overrides\n{\n\t// \"source.mylanguage\": \"mylang\"\n\t$0\n}\n"
     }
   },
-  {
-    "caption": "LSP Development: Parse VSCode Package JSON From Clipboard",
-    "command": "lsp_parse_vscode_package_json"
-  },
-  {
-    "caption": "LSP: Troubleshoot Server",
-    "command": "lsp_troubleshoot_server"
-  },
-  {
-    "caption": "LSP: Dump Window Configs",
-    "command": "lsp_dump_window_configs"
-  },
-  {
-    "caption": "LSP: Enable Language Server Globally",
-    "command": "lsp_enable_language_server_globally",
-  },
-  {
-    "caption": "LSP: Disable Language Server Globally",
-    "command": "lsp_disable_language_server_globally",
-  },
+  // {
+  //   "caption": "LSP: Enable Language Server Globally",
+  //   "command": "lsp_enable_language_server_globally",
+  // },
+  // {
+  //   "caption": "LSP: Disable Language Server Globally",
+  //   "command": "lsp_disable_language_server_globally",
+  // },
   {
     "caption": "LSP: Enable Language Server in Project",
     "command": "lsp_enable_language_server_in_project",
@@ -107,32 +95,6 @@
   {
     "caption": "LSP: Rename",
     "command": "lsp_symbol_rename"
-  },
-  {
-    "caption": "LSP: Code Action…",
-    "command": "lsp_code_actions"
-  },
-  {
-    "caption": "LSP: Refactor…",
-    "command": "lsp_code_actions",
-    "args": {
-      "only_kinds": [
-        "refactor"
-      ]
-    },
-  },
-  {
-    "caption": "LSP: Source Action…",
-    "command": "lsp_code_actions",
-    "args": {
-      "only_kinds": [
-        "source"
-      ]
-    }
-  },
-  {
-    "caption": "LSP: Run Code Lens",
-    "command": "lsp_code_lens"
   },
   {
     "caption": "LSP: Find References",
