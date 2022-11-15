@@ -339,6 +339,8 @@ class LspHoverCommand(LspTextCommand):
         s = s.replace("%3E", ">")
         if quote:
             s = s.replace('%22', '"')
+            s = s.replace("%27", "'")
+            s = s.replace("%60", "`")
         return s
 
     def _on_navigate(self, href: str, point: int) -> None:

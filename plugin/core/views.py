@@ -989,6 +989,17 @@ def _with_scope_color(view: sublime.View, text: Any, scope: str) -> str:
     return _with_color(text, view.style_for_scope(scope)["foreground"])
 
 
+def _url_encode(s, quote=True):
+    s = s.replace("&", "%26")
+    s = s.replace("<", "%3C")
+    s = s.replace(">", "%3E")
+    if quote:
+        s = s.replace('"', "%22")
+        s = s.replace("'", "%27")
+        s = s.replace("`", "%60")
+    return s
+
+
 def format_diagnostic_for_html(
     view: sublime.View,
     config: ClientConfig,
@@ -1001,17 +1012,18 @@ def format_diagnostic_for_html(
         '">',
         text2html(diagnostic["message"])
     ]
-    code_description = diagnostic.get("codeDescription")
-    if code_description:
-        code = make_link(code_description["href"], diagnostic.get("code"))  # type: Optional[str]
-    elif "code" in diagnostic:
-        code = _with_color(diagnostic["code"], "color(var(--foreground) alpha(0.6))")
-    else:
-        code = None
-    source = diagnostic_source(diagnostic)
-    formatted.extend((" ", _with_color(source, "color(var(--foreground) alpha(0.6))")))
-    if code:
-        formatted.extend((_with_scope_color(view, ":", "punctuation.separator.lsp"), code))
+    # 不显示 diagnostic code
+    # code_description = diagnostic.get("codeDescription")
+    # if code_description:
+    #     code = make_link(code_description["href"], diagnostic.get("code"))  # type: Optional[str]
+    # elif "code" in diagnostic:
+    #     code = _with_color(diagnostic["code"], "color(var(--foreground) alpha(0.6))")
+    # else:
+    #     code = None
+    # source = diagnostic_source(diagnostic)
+    # formatted.extend((" ", _with_color(source, "color(var(--foreground) alpha(0.6))")))
+    # if code:
+    #     formatted.extend((_with_scope_color(view, ":", "punctuation.separator.lsp"), code))
     related_infos = diagnostic.get("relatedInformation")
     if related_infos:
         formatted.append('<pre class="related_info">')
@@ -1019,6 +1031,14 @@ def format_diagnostic_for_html(
                                      for info in related_infos))
         formatted.append("</pre>")
     formatted.append("</pre>")
+
+    # 添加 diagnostic
+    severity = diagnostic_severity(diagnostic)
+    if severity != DiagnosticSeverity.Hint:
+        diagnostic_content = diagnostic["message"]
+        formatted.append('<p><a href=\'' + _url_encode(diagnostic_content) + '\'>Diagnostic</a></p>\n')
+    else:
+        formatted = ""
     return "".join(formatted)
 
 

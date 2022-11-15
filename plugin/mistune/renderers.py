@@ -193,10 +193,10 @@ class HTMLRenderer(BaseRenderer):
             lang = escape_html(lang)
             html += ' class="language-' + lang + '"'
         html += ' style="font-family: IBM Plex Mono"'
-        print_content = code.replace("'", "\"")
+        code_content = code.replace("'", "\"")
         code = escape(code, quote=False).replace("\n", "<br />")
         return html + '>' + code + '</code></pre></p>\n' + \
-            '<p><a href=\'' + url_encode(print_content) + '\'>Print</a></p>\n'
+            '<p><a href=\'' + url_encode(code_content) + '\'>Code</a></p>\n'
 
     # def block_code(self, code, info=None):
     #     html = '<pre><code'
