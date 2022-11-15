@@ -69,6 +69,9 @@ from .plugin.symbols import LspSelectionClearCommand
 from .plugin.symbols import LspSelectionSetCommand
 from .plugin.symbols import LspWorkspaceSymbolsCommand
 
+from .plugin.ext.deno_plugin import deno
+from .plugin.ext.jdtls_plugin import jdtls
+
 
 def _get_final_subclasses(derived: List[Type], results: List[Type]) -> None:
     for d in derived:
@@ -82,6 +85,9 @@ def _get_final_subclasses(derived: List[Type], results: List[Type]) -> None:
 def _register_all_plugins() -> None:
     plugin_classes = []  # type: List[Type[AbstractPlugin]]
     _get_final_subclasses(AbstractPlugin.__subclasses__(), plugin_classes)
+    # 插件类名称必须和Client名称保持一致, 否则插件失效
+    plugin_classes.append(deno)
+    plugin_classes.append(jdtls)
     for plugin_class in plugin_classes:
         try:
             if not plugin_class.name():

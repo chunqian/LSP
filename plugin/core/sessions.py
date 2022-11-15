@@ -83,6 +83,7 @@ from abc import ABCMeta
 from abc import abstractmethod
 from abc import abstractproperty
 from weakref import WeakSet
+from .tinylog import tinylog as log
 from .. import mistune
 import functools
 # import mdpopups
@@ -957,13 +958,14 @@ def _register_plugin_impl(plugin: Type[AbstractPlugin], notify_listener: bool) -
     name = plugin.name()
     if name in _plugins:
         return
-    try:
-        settings, base_file = plugin.configuration()
-        if client_configs.add_external_config(name, settings, base_file, notify_listener):
-            on_change = functools.partial(client_configs.update_external_config, name, settings, base_file)
-            _plugins[name] = (plugin, SettingsRegistration(settings, on_change))
-    except Exception as ex:
-        exception_log('Failed to register plugin "{}"'.format(name), ex)
+    # try:
+    #     settings, base_file = plugin.configuration()
+    #     if client_configs.add_external_config(name, settings, base_file, notify_listener):
+    #         on_change = functools.partial(client_configs.update_external_config, name, settings, base_file)
+    #         _plugins[name] = (plugin, SettingsRegistration(settings, on_change))
+    # except Exception as ex:
+    #     exception_log('Failed to register plugin "{}"'.format(name), ex)
+    _plugins[name] = (plugin, None)
 
 
 def register_plugin(plugin: Type[AbstractPlugin], notify_listener: bool = True) -> None:
@@ -1030,6 +1032,7 @@ def unregister_plugin(plugin: Type[AbstractPlugin]) -> None:
 
 def get_plugin(name: str) -> Optional[Type[AbstractPlugin]]:
     global _plugins
+    log.info("plugins: {}, name: {}", _plugins, name)
     tup = _plugins.get(name, None)
     return tup[0] if tup else None
 
