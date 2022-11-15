@@ -1,452 +1,120 @@
 [
-    // To enable or change an existing key binding, copy it to the right view and uncomment, if needed.
-    // To change the associated key press, edit the "keys" value.
+  // To enable or change an existing key binding, copy it to the right view and uncomment, if needed.
+  // To change the associated key press, edit the "keys" value.
 
-    // Show a list of available LSP commands
-    // {
-    //     "keys": ["f1"],
-    //     "command": "show_overlay",
-    //     "args": {
-    //         "overlay": "command_palette",
-    //         "text": "LSP: ",
-    //     }
-    // },
-    // Override native save to handle Code-Actions-On-Save
-    {
-        "command": "lsp_save",
-        "keys": [
-            "primary+s"
-        ],
-        "context": [
-            {
-                "key": "lsp.session_with_capability",
-                "operator": "equal",
-                "operand": "textDocumentSync.willSave | textDocumentSync.willSaveWaitUntil | codeActionProvider.codeActionKinds | documentFormattingProvider | documentRangeFormattingProvider"
-            }
-        ]
+  // Show a list of available LSP commands
+  // {
+  //   "keys": ["f1"],
+  //   "command": "show_overlay",
+  //   "args": {
+  //     "overlay": "command_palette",
+  //     "text": "LSP: ",
+  //   }
+  // },
+  // Override native save to handle Code-Actions-On-Save
+  {
+    "command": "lsp_save",
+    "keys": ["primary+s"],
+    "context": [
+      {
+        "key": "lsp.session_with_capability",
+        "operator": "equal",
+        "operand": "textDocumentSync.willSave | textDocumentSync.willSaveWaitUntil | codeActionProvider.codeActionKinds | documentFormattingProvider | documentRangeFormattingProvider"
+      }
+    ]
+  },
+  // Insert/Replace Completions
+  {
+    "command": "lsp_commit_completion_with_opposite_insert_mode",
+    "keys": ["alt+enter"],
+    "context": [
+      {
+        "key": "auto_complete_visible",
+        "operator": "equal",
+        "operand": true
+      },
+      {
+        "key": "lsp.session_with_capability",
+        "operator": "equal",
+        "operand": "completionProvider"
+      }
+    ]
+  },
+  // Toggle Diagnostics Panel
+  {
+    "command": "lsp_show_diagnostics_panel",
+    "keys": ["primary+alt+m"],
+    "context": [
+      {
+        "key": "setting.lsp_active"
+      }
+    ]
+  },
+  // Trigger Signature Help
+  {
+    "command": "lsp_signature_help_show",
+    "keys": ["primary+alt+space"],
+    "context": [
+      {
+        "key": "lsp.signature_help_available",
+        "operator": "equal",
+        "operand": true
+      }
+    ]
+  },
+  // Move Up/Down in Signature Help
+  {
+    "command": "lsp_signature_help_navigate",
+    "args": {
+      "forward": false
     },
-    // Insert/Replace Completions
-    {
-        "command": "lsp_commit_completion_with_opposite_insert_mode",
-        "keys": [
-            "alt+enter"
-        ],
-        "context": [
-            {
-                "key": "auto_complete_visible",
-                "operator": "equal",
-                "operand": true
-            },
-            {
-                "key": "lsp.session_with_capability",
-                "operator": "equal",
-                "operand": "completionProvider"
-            }
-        ]
+    "keys": ["up"],
+    "context": [
+      {
+        "key": "lsp.signature_help_multiple_choices_available",
+        "operator": "equal",
+        "operand": true
+      }
+    ]
+  },
+  {
+    "command": "lsp_signature_help_navigate",
+    "args": {
+      "forward": true
     },
-    // Save all open files with lsp_save
-    // {
-    //     "command": "lsp_save_all",
-    //     "keys": [
-    //         "UNBOUND"
-    //     ]
-    // },
-    // Run Code Action
-    // {
-    //     "command": "lsp_code_actions",
-    //     "keys": [
-    //         "UNBOUND"
-    //     ],
-    //     "context": [
-    //         {
-    //             "key": "lsp.session_with_capability",
-    //             "operator": "equal",
-    //             "operand": "codeActionProvider"
-    //         }
-    //     ]
-    // },
-    // Run Source Actions
-    // {
-    //     "command": "lsp_code_actions",
-    //     "args": {
-    //         "only_kinds": [
-    //             "source"
-    //         ]
-    //     },
-    //     "keys": [
-    //         "UNBOUND"
-    //     ],
-    //     "context": [
-    //         {
-    //             "key": "lsp.session_with_capability",
-    //             "operator": "equal",
-    //             "operand": "codeActionProvider.codeActionKinds"
-    //         }
-    //     ]
-    // },
-    // Run Code Lens
-    // {
-    //     "command": "lsp_code_lens",
-    //     "keys": [
-    //         "UNBOUND"
-    //     ],
-    //     "context": [
-    //         {
-    //             "key": "lsp.session_with_capability",
-    //             "operator": "equal",
-    //             "operand": "codeLensProvider"
-    //         }
-    //     ]
-    // },
-    // Toggle Diagnostics Panel
-    {
-        "command": "lsp_show_diagnostics_panel",
-        "keys": [
-            "primary+alt+m"
-        ],
-        "context": [
-            {
-                "key": "setting.lsp_active"
-            }
-        ]
+    "keys": ["down"],
+    "context": [
+      {
+        "key": "lsp.signature_help_multiple_choices_available",
+        "operator": "equal",
+        "operand": true
+      }
+    ]
+  },
+  // Find References
+  {
+    "command": "lsp_symbol_references",
+    "args": {
+      "side_by_side": false,
+      "fallback": false
     },
-    // Toggle Language Server Logs Panel
-    // {
-    //     "command": "lsp_toggle_server_panel",
-    //     "keys": [
-    //         "UNBOUND"
-    //     ],
-    //     "context": [
-    //         {
-    //             "key": "setting.lsp_active"
-    //         }
-    //     ]
-    // },
-    // Trigger Signature Help
-    {
-        "command": "lsp_signature_help_show",
-        "keys": [
-            "primary+alt+space"
-        ],
-        "context": [
-            {
-                "key": "lsp.signature_help_available",
-                "operator": "equal",
-                "operand": true
-            }
-        ]
-    },
-    // Move Up/Down in Signature Help
-    {
-        "command": "lsp_signature_help_navigate",
-        "args": {
-            "forward": false
-        },
-        "keys": [
-            "up"
-        ],
-        "context": [
-            {
-                "key": "lsp.signature_help_multiple_choices_available",
-                "operator": "equal",
-                "operand": true
-            }
-        ]
-    },
-    {
-        "command": "lsp_signature_help_navigate",
-        "args": {
-            "forward": true
-        },
-        "keys": [
-            "down"
-        ],
-        "context": [
-            {
-                "key": "lsp.signature_help_multiple_choices_available",
-                "operator": "equal",
-                "operand": true
-            }
-        ]
-    },
-    // Find References
-    {
-        "command": "lsp_symbol_references",
-        "args": {
-            "side_by_side": false,
-            "fallback": false
-        },
-        "keys": [
-            "shift+f12"
-        ],
-        "context": [
-            {
-                "key": "lsp.session_with_capability",
-                "operator": "equal",
-                "operand": "referencesProvider"
-            },
-        ]
-    },
-    // Goto Definition
-    // {
-    //     "command": "lsp_symbol_definition",
-    //     "args": {
-    //         "side_by_side": false,
-    //         "force_group": true,
-    //         "fallback": false,
-    //         "group": -1
-    //     },
-    //     "keys": [
-    //         "f12"
-    //     ],
-    //     "context": [
-    //         {
-    //             "key": "lsp.session_with_capability",
-    //             "operator": "equal",
-    //             "operand": "definitionProvider"
-    //         },
-    //         {
-    //             "key": "auto_complete_visible",
-    //             "operator": "equal",
-    //             "operand": false
-    //         }
-    //     ]
-    // },
-    // Goto Type Definition
-    // {
-    //     "command": "lsp_symbol_type_definition",
-    //     "args": {
-    //         "side_by_side": false,
-    //         "force_group": true,
-    //         "group": -1
-    //     },
-    //     "keys": [
-    //         "UNBOUND"
-    //     ],
-    //     "context": [
-    //         {
-    //             "key": "lsp.session_with_capability",
-    //             "operator": "equal",
-    //             "operand": "typeDefinitionProvider"
-    //         },
-    //         {
-    //             "key": "auto_complete_visible",
-    //             "operator": "equal",
-    //             "operand": false
-    //         }
-    //     ]
-    // },
-    // Goto Declaration
-    // {
-    //     "command": "lsp_symbol_declaration",
-    //     "args": {
-    //         "side_by_side": false,
-    //         "force_group": true,
-    //         "group": -1
-    //     },
-    //     "keys": [
-    //         "UNBOUND"
-    //     ],
-    //     "context": [
-    //         {
-    //             "key": "lsp.session_with_capability",
-    //             "operator": "equal",
-    //             "operand": "declarationProvider"
-    //         },
-    //         {
-    //             "key": "auto_complete_visible",
-    //             "operator": "equal",
-    //             "operand": false
-    //         }
-    //     ]
-    // },
-    // Goto Implementation
-    // {
-    //     "command": "lsp_symbol_implementation",
-    //     "args": {
-    //         "side_by_side": false,
-    //         "force_group": true,
-    //         "group": -1
-    //     },
-    //     "keys": [
-    //         "UNBOUND"
-    //     ],
-    //     "context": [
-    //         {
-    //             "key": "lsp.session_with_capability",
-    //             "operator": "equal",
-    //             "operand": "implementationProvider"
-    //         },
-    //         {
-    //             "key": "auto_complete_visible",
-    //             "operator": "equal",
-    //             "operand": false
-    //         }
-    //     ]
-    // },
-    // Goto Diagnostic
-    // {
-    //     "command": "lsp_goto_diagnostic",
-    //     "args": {
-    //         "uri": "$view_uri"
-    //     },
-    //     "keys": [
-    //         "f8"
-    //     ],
-    // },
-    // Goto Diagnostic in Project
-    // {
-    //     "command": "lsp_goto_diagnostic",
-    //     "keys": [
-    //         "shift+f8"
-    //     ],
-    // },
-    // Jump to next Diagnostic in Tab
-    // {
-    //     "command": "lsp_next_diagnostic",
-    //     "keys": [
-    //         "UNBOUND"
-    //     ],
-    //      "context": [
-    //          {
-    //              "key": "setting.lsp_active"
-    //          }
-    //      ]
-    // },
-    // Jump to previous Diagnostic in Tab
-    // {
-    //     "command": "lsp_prev_diagnostic",
-    //     "keys": [
-    //         "UNBOUND"
-    //     ],
-    //      "context": [
-    //          {
-    //              "key": "setting.lsp_active"
-    //          }
-    //      ]
-    // },
-    // Rename
-    // {
-    //     "command": "lsp_symbol_rename",
-    //     "keys": [
-    //         "UNBOUND"
-    //     ],
-    //     "context": [
-    //         {
-    //             "key": "lsp.session_with_capability",
-    //             "operator": "equal",
-    //             "operand": "renameProvider"
-    //         }
-    //     ]
-    // },
-    // Format File
-    // {
-    //     "command": "lsp_format_document",
-    //     "keys": [
-    //         "UNBOUND"
-    //     ],
-    //     "context": [
-    //         {
-    //             "key": "lsp.session_with_capability",
-    //             "operator": "equal",
-    //             "operand": "documentFormattingProvider | documentRangeFormattingProvider"
-    //         }
-    //     ]
-    // },
-    // Format Selection
-    // {
-    //     "command": "lsp_format_document_range",
-    //     "keys": [
-    //         "UNBOUND"
-    //     ],
-    //     "context": [
-    //         {
-    //             "key": "lsp.session_with_capability",
-    //             "operator": "equal",
-    //             "operand": "documentRangeFormattingProvider"
-    //         }
-    //     ]
-    // },
-    // Document Symbols (a replacement for ST's "Goto Symbol")
-    // {
-    //     "command": "lsp_document_symbols",
-    //     "keys": [
-    //         "primary+r"
-    //     ],
-    //     "context": [
-    //         {
-    //             "key": "lsp.session_with_capability",
-    //             "operator": "equal",
-    //             "operand": "documentSymbolProvider"
-    //         }
-    //     ]
-    // },
-    // Workspace Symbols (a replacement for ST's "Goto Symbol In Project")
-    // {
-    //     "command": "lsp_workspace_symbols",
-    //     "keys": [
-    //         "primary+shift+r"
-    //     ],
-    //     "context": [
-    //         {
-    //             "key": "lsp.session_with_capability",
-    //             "operator": "equal",
-    //             "operand": "workspaceSymbolProvider"
-    //         }
-    //     ]
-    // },
-    // Hover Popup
-    // {
-    //     "command": "lsp_hover",
-    //     "keys": [
-    //         "UNBOUND"
-    //     ],
-    //     "context": [
-    //         {
-    //             "key": "lsp.session_with_capability",
-    //             "operator": "equal",
-    //             "operand": "hoverProvider"
-    //         }
-    //     ]
-    // },
-    // Follow Link
-    // {
-    //     "command": "lsp_open_link",
-    //     "keys": [
-    //         "UNBOUND"
-    //     ],
-    //     "context": [
-    //         {
-    //             "key": "lsp.session_with_capability",
-    //             "operator": "equal",
-    //             "operand": "documentLinkProvider"
-    //         }
-    //     ]
-    // },
-    // Expand Selection (a replacement for ST's "Expand Selection")
-    // {
-    //     "command": "lsp_expand_selection",
-    //     "keys": [
-    //         "primary+shift+a"
-    //     ],
-    //     "context": [
-    //         {
-    //             "key": "lsp.session_with_capability",
-    //             "operator": "equal",
-    //             "operand": "selectionRangeProvider"
-    //         }
-    //     ]
-    // },
-    // Internal key-binding
-    {
-        "keys": [
-            "<character>"
-        ],
-        "command": "noop",
-        "context": [
-            {
-                "key": "setting.lsp_suppress_input",
-            }
-        ]
-    },
+    "keys": ["shift+f12"],
+    "context": [
+      {
+        "key": "lsp.session_with_capability",
+        "operator": "equal",
+        "operand": "referencesProvider"
+      },
+    ]
+  },
+  // Internal key-binding
+  {
+    "keys": ["<character>"],
+    "command": "noop",
+    "context": [
+      {
+        "key": "setting.lsp_suppress_input",
+      }
+    ]
+  },
 ]

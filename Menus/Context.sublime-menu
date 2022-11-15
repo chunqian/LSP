@@ -1,58 +1,57 @@
 [
-    {
-        "caption": "LSP",
-        "children":
-        [
-            {
-                "command": "lsp_symbol_references",
-                "caption": "Find References"
-            },
-            {
-                "command": "lsp_symbol_definition",
-                "caption": "Goto Definition…"
-            },
-            {
-                "command": "lsp_symbol_type_definition",
-                "caption": "Goto Type Definition…"
-            },
-            {
-                "command": "lsp_symbol_declaration",
-                "caption": "Goto Declaration…"
-            },
-            {
-                "command": "lsp_symbol_implementation",
-                "caption": "Goto Implementation…"
-            },
-            {
-                "command": "lsp_symbol_rename",
-                "caption": "Rename…"
-            },
-            {
-                "command": "lsp_code_actions",
-                "caption": "Code Action…"
-            },
-            {
-                "command": "lsp_code_actions",
-                "args": {"only_kinds": ["refactor"]},
-                "caption": "Refactor…"
-            },
-            {
-                "command": "lsp_code_actions",
-                "args": {"only_kinds": ["source"]},
-                "caption": "Source Action…"
-            },
-            {
-                "command": "lsp_format_document",
-                "caption": "Format File"
-            },
-            {
-                "command": "lsp_format_document_range",
-                "caption": "Format Selection"
-            },
-            {
-                "command": "lsp_expand_selection",
-                "caption": "Expand Selection"
-            }
-        ]
-    }
+  {
+    "caption": "LSP",
+    "children": [
+      {
+        "command": "lsp_symbol_references",
+        "caption": "Find References"
+      },
+      {
+        "command": "lsp_symbol_definition",
+        "caption": "Goto Definition…"
+      },
+      {
+        "command": "lsp_symbol_type_definition",
+        "caption": "Goto Type Definition…"
+      },
+      {
+        "command": "lsp_symbol_declaration",
+        "caption": "Goto Declaration…"
+      },
+      {
+        "command": "lsp_symbol_implementation",
+        "caption": "Goto Implementation…"
+      },
+      {
+        "command": "lsp_symbol_rename",
+        "caption": "Rename…"
+      },
+      {
+        "command": "lsp_code_actions",
+        "caption": "Code Action…"
+      },
+      {
+        "command": "lsp_code_actions",
+        "args": { "only_kinds": ["refactor"] },
+        "caption": "Refactor…"
+      },
+      {
+        "command": "lsp_code_actions",
+        "args": { "only_kinds": ["source"] },
+        "caption": "Source Action…"
+      },
+      {
+        "command": "lsp_format_document",
+        "caption": "Format File"
+      },
+      {
+        "command": "lsp_format_document_range",
+        "caption": "Format Selection"
+      },
+      {
+        "command": "lsp_expand_selection",
+        "caption": "Expand Selection"
+      }
+    ]
+  }
 ]
