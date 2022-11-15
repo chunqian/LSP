@@ -10,10 +10,10 @@ from LSP.plugin.core.protocol import DocumentUri
 from LSP.plugin.core.views import text_document_identifier
 
 
-SESSION_NAME = "jdtls"
+SESSION_NAME = "java-langserver"
 
 
-class jdtls(AbstractPlugin):
+class JdtlsPlugin(AbstractPlugin):
     @classmethod
     def name(cls) -> str:
         return SESSION_NAME

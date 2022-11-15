@@ -5,10 +5,10 @@ import sublime
 import urllib.parse
 
 
-SESSION_NAME = "deno"
+SESSION_NAME = "deno-langserver"
 
 
-class deno(AbstractPlugin):
+class DenoPlugin(AbstractPlugin):
 
     @classmethod
     def name(cls) -> str:
