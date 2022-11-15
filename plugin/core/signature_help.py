@@ -89,7 +89,7 @@ class SigHelp:
         self._active_signature_index = max(0, min(new_index, len(self._signatures) - 1))
 
     def _render_intro(self) -> str:
-        fmt = '<p><div style="font-size: 0.9rem"><b>{}</b> of <b>{}</b> overloads ' + \
+        fmt = '<p><div style="font-size: 1.0rem"><b>{}</b> of <b>{}</b> overloads ' + \
               "(use ↑ ↓ to navigate, press Esc to hide):</div></p>"
         return fmt.format(
             self._active_signature_index + 1,
@@ -143,7 +143,7 @@ class SigHelp:
         if docs:
             if formatted:
                 formatted.append("<hr/>")
-            formatted.append('<div style="font-size: 0.9rem">')
+            formatted.append('<div style="font-size: 1.0rem">')
             formatted.append(docs)
             formatted.append('</div>')
         return formatted
@@ -180,8 +180,10 @@ def _parameter(view: sublime.View, content: str, emphasize: bool) -> str:
 
 
 def _wrap_with_scope_style(view: sublime.View, content: str, scope: str, emphasize: bool) -> str:
-    return '<span style="color: {}{}">{}</span>'.format(
-        view.style_for_scope(scope)["foreground"],
-        '; font-weight: bold; text-decoration: underline' if emphasize else '',
-        html.escape(content, quote=False)
-    )
+    # 不显示 语法高亮
+    # return '<span style="color: {}{}">{}</span>'.format(
+    #     view.style_for_scope(scope)["foreground"],
+    #     '; font-weight: bold; text-decoration: underline' if emphasize else '',
+    #     html.escape(content, quote=False)
+    # )
+    return content
