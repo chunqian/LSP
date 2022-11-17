@@ -48,6 +48,7 @@ def _process_table(header, align):
         headers.append('')
 
     cells = []
+    i = int()
     for i, v in enumerate(aligns):
         if re.search(r'^ *-+: *$', v):
             aligns[i] = 'right'

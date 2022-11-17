@@ -4,10 +4,10 @@ from ..core.typing import Callable, Mapping, Any, Dict
 import sublime
 import urllib.parse
 
-from LSP.plugin.core.edit import apply_workspace_edit
-from LSP.plugin.core.edit import parse_workspace_edit
-from LSP.plugin.core.protocol import DocumentUri
-from LSP.plugin.core.views import text_document_identifier
+from ..core.edit import apply_workspace_edit
+from ..core.edit import parse_workspace_edit
+from ..core.protocol import DocumentUri
+from ..core.views import text_document_identifier
 
 
 SESSION_NAME = "java-langserver"

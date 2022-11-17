@@ -47,6 +47,7 @@ def parse_footnote_item(block, k, i, state):
     if '\n' not in stripped_text:
         children = [{'type': 'paragraph', 'text': stripped_text}]
     else:
+        second_line = str()
         lines = text.splitlines()
         for second_line in lines[1:]:
             if second_line:
