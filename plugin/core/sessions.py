@@ -1669,8 +1669,10 @@ class Session(TransportCallbacks):
             for sv in not_visible_session_views:
                 sv.set_code_lenses_pending_refresh()
 
-    def m_workspace_semanticTokens_refresh(self, params: Any, request_id: Any) -> None:
+    def m_workspace_semanticTokens_refresh(self, params: Any, request_id: Any = None) -> None:
         """handles the workspace/semanticTokens/refresh request"""
+        if request_id is None:
+            return
         self.send_response(Response(request_id, None))
         visible_session_views, not_visible_session_views = self.session_views_by_visibility()
         for sv in visible_session_views:
