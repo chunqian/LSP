@@ -1033,7 +1033,8 @@ def unregister_plugin(plugin: Type[AbstractPlugin]) -> None:
 
 def get_plugin(name: str) -> Optional[Type[AbstractPlugin]]:
     global _plugins
-    log.info("plugins: {}, name: {}", _plugins, name)
+    log.info("Language Server Name: {}", name)
+    log.info("Language Server Plugins: {}", _plugins)
     tup = _plugins.get(name, None)
     return tup[0] if tup else None
 
