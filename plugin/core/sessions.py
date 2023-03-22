@@ -1540,7 +1540,7 @@ class Session(TransportCallbacks):
                 v.settings().set("lsp_uri", uri)
                 v.set_scratch(True)
                 v.set_name(title)
-                v.run_command("append", {"characters": content.encode('utf-8').decode('unicode_escape')})
+                v.run_command("append", {"characters": content})
                 v.set_read_only(True)
                 if r:
                     center_selection(v, r)
