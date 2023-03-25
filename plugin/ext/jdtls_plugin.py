@@ -18,6 +18,14 @@ class JdtlsPlugin(AbstractPlugin):
     def name(cls) -> str:
         return SESSION_NAME
 
+    def unicode_to_str(self, resp):
+        text = ""
+        try:
+            text = resp.encode('ascii','strict').decode('unicode_escape')
+        except Exception as e:
+            text = resp
+        return text
+
     def on_open_uri_async(
         self, uri: DocumentUri, callback: Callable[[str, str, str], None]
     ) -> bool:
@@ -30,7 +38,7 @@ class JdtlsPlugin(AbstractPlugin):
             Request(
                 "java/classFileContents", text_document_identifier(uri), progress=True
             ),
-            lambda resp: callback(uri, resp, "Packages/Java/Java.sublime-syntax"),
+            lambda resp: callback(uri, self.unicode_to_str(resp), "Packages/Java/Java.sublime-syntax"),
             lambda err: callback(
                 "ERROR", str(err), "Packages/Text/Plain text.tmLanguage"
             ),
