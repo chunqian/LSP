@@ -170,12 +170,17 @@ class HTMLRenderer(BaseRenderer):
         return html
 
     def paragraph(self, text):
+        # 查找 h1 - h6
+        tag_names = ["h1", "h2", "h3", "h4", "h5", "h6"]
+        for tag_name in tag_names:
+            tag = '<' + tag_name + '>'
+            if tag in text:
+                text = text.replace(tag, '<' + tag_name + FONT_STYLE + '>')
         return '<p>' + text + '</p>\n'
 
     def heading(self, text, level):
-        tag = 'h' + str(level)
-        tag += FONT_STYLE
-        return '<' + tag + '>' + text + '</' + tag + '>\n'
+        tag_name = 'h' + str(level)
+        return '<' + tag_name + FONT_STYLE + '>' + text + '</' + tag_name + '>\n'
 
     def newline(self):
         return ''
