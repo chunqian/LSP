@@ -159,7 +159,9 @@ class HTMLRenderer(BaseRenderer):
         return '<strong>' + text + '</strong>'
 
     def codespan(self, text):
-        return '<code>' + escape(text) + '</code>'
+        tag_name = 'code'
+        # return '<code>' + escape(text) + '</code>'
+        return '<' + tag_name + FONT_STYLE + '>' + escape(text) + '</code>'
 
     def linebreak(self):
         return '<br />\n'
