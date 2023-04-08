@@ -1,5 +1,6 @@
 from .util import escape, escape_html, url_encode
 
+FONT_STYLE = ' style="font-family: IBM Plex Mono; font-size: 12px;"'
 
 class BaseRenderer(object):
     NAME = 'base'
@@ -173,6 +174,7 @@ class HTMLRenderer(BaseRenderer):
 
     def heading(self, text, level):
         tag = 'h' + str(level)
+        tag += FONT_STYLE
         return '<' + tag + '>' + text + '</' + tag + '>\n'
 
     def newline(self):
@@ -192,11 +194,12 @@ class HTMLRenderer(BaseRenderer):
             lang = info.split(None, 1)[0]
             lang = escape_html(lang)
             html += ' class="language-' + lang + '"'
-        html += ' style="font-family: IBM Plex Mono"'
+        html += FONT_STYLE
         code_content = code.replace("'", "\"")
         code = escape(code, quote=False).replace("\n", "<br />")
-        return html + '>' + code + '</code></pre></p>\n' + \
+        html += '>' + code + '</code></pre></p>\n' + \
             '<p><a href=\'' + url_encode(code_content) + '\'>Code</a></p>\n'
+        return html
 
     # def block_code(self, code, info=None):
     #     html = '<pre><code'
