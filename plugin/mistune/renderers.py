@@ -1,3 +1,4 @@
+import re
 from .util import escape, escape_html, url_encode
 
 FONT_STYLE = ' style="font-family: IBM Plex Mono; font-size: 12px;"'
@@ -172,10 +173,10 @@ class HTMLRenderer(BaseRenderer):
     def paragraph(self, text):
         # 查找 h1 - h6
         tag_names = ["h1", "h2", "h3", "h4", "h5", "h6"]
-        for tag_name in tag_names:
-            tag = '<' + tag_name + '>'
-            if tag in text:
-                text = text.replace(tag, '<' + tag_name + FONT_STYLE + '>')
+        for i in range(len(tag_names)):
+            tag_names[i] = '<' + tag_names[i] + '>'
+        pattern = '|'.join(map(re.escape, tag_names))
+        text = re.sub(pattern, lambda match: '<' + match.group(0)[1:-1] + FONT_STYLE + '>', text)
         return '<p>' + text + '</p>\n'
 
     def heading(self, text, level):
