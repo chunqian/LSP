@@ -15,6 +15,7 @@ import subprocess
 import threading
 import time
 import weakref
+import re
 
 
 T = TypeVar('T')
@@ -63,8 +64,12 @@ class JsonRpcProcessor(AbstractProcessor[Dict[str, Any]]):
 
     def read_data(self, reader: IO[bytes]) -> Optional[Dict[str, Any]]:
         headers = http.client.parse_headers(reader)  # type: ignore
+        headers_str = headers.as_string()
+
         try:
-            body = reader.read(int(headers.get("Content-Length")))
+            match = re.search(r"Content-Length:\s*(\d+)", headers_str)
+            content_length = match.group(1)
+            body = reader.read(int(content_length))
         except TypeError:
             # Expected error on process stopping. Stop the read loop.
             raise StopLoopError()
