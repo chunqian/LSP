@@ -67,7 +67,7 @@ class JsonRpcProcessor(AbstractProcessor[Dict[str, Any]]):
         headers_str = headers.as_string()
 
         try:
-            match = re.search(r"Content-Length:\s*(\d+)", headers_str)
+            match = re.search(r"Content-Length:\s*(\d+)", headers_str, re.IGNORECASE)
             content_length = match.group(1)
             body = reader.read(int(content_length))
         except (TypeError, AttributeError):
