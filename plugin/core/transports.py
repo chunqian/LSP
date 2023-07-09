@@ -70,7 +70,7 @@ class JsonRpcProcessor(AbstractProcessor[Dict[str, Any]]):
             match = re.search(r"Content-Length:\s*(\d+)", headers_str)
             content_length = match.group(1)
             body = reader.read(int(content_length))
-        except TypeError:
+        except (TypeError, AttributeError):
             # Expected error on process stopping. Stop the read loop.
             raise StopLoopError()
         try:
