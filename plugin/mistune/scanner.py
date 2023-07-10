@@ -96,6 +96,8 @@ class Matcher(object):
         code_match = re.search(code_pattern, string, re.DOTALL)
         if code_match:
             string = code_match.group(0)
+        else:
+            log.info('string: {}', string)
         pos = 0
         endpos = len(string)
         last_end = 0
