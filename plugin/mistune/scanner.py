@@ -1,3 +1,4 @@
+from ..core.tinylog import tinylog as log
 import re
 
 class Scanner(re.Scanner):
@@ -90,6 +91,11 @@ class Matcher(object):
         return m.start() + 1
 
     def iter(self, string, state, parse_text):
+        # 匹配代码段
+        code_pattern = r"```\w*\s*\n(.+?)\n```\n"
+        code_match = re.search(code_pattern, string, re.DOTALL)
+        if code_match:
+            string = code_match.group(0)
         pos = 0
         endpos = len(string)
         last_end = 0
