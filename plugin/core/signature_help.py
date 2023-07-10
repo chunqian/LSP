@@ -69,7 +69,7 @@ class SigHelp:
         if self.has_multiple_signatures():
             formatted.append(self._render_intro())
         formatted.extend(self._render_label(view, signature))
-        formatted.extend(self._render_docs(view, signature))
+        # formatted.extend(self._render_docs(view, signature))
         return "".join(formatted)
 
     def active_signature_help(self) -> SignatureHelp:
