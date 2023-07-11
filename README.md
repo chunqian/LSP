@@ -1,4 +1,3 @@
-:information_source: You are reading the README of the `main` branch. This branch targets ST4. If you are looking for the ST3 version, switch to the [st3 branch](https://github.com/sublimelsp/LSP/tree/st3).
 
 <p>
   <h1 align="center">LSP</h1>
@@ -22,9 +21,9 @@
 
 <p align="center">Like an IDE, except it's the good parts. <a href="https://lsp.sublimetext.io">Learn more</a>.</p>
 
-<p align="center"><img src="docs/src/images/showcase.gif" alt="TypeScript Server Example"></img></p>
-
 ## Installation
+
+The `main` branch targets ST4
 
 ### Stable Version
 
