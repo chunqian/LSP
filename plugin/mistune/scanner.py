@@ -99,7 +99,7 @@ class Matcher(object):
             language_name = language_match.group(1)
 
         # 匹配代码段
-        code_pattern = r"```\w*\s*\n(.+?\n)```\n"
+        code_pattern = r"```\w*,*\w*\s*\n(.+?\n)```\n"
         code_matches = re.findall(code_pattern, string, re.DOTALL)
 
         # 合并匹配到的内容
