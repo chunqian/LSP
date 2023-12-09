@@ -1,6 +1,6 @@
 from .util import escape, escape_html, url_encode
 
-FONT_STYLE = ' style="font-family: IBM Plex Mono; font-size: 12px;"'
+FONT_STYLE = ' style="font-family: IBM Plex Mono Regular; font-size: 12px;"'
 
 class BaseRenderer(object):
     NAME = 'base'
