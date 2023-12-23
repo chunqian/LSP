@@ -98,13 +98,14 @@ class Matcher(object):
         if language_match:
             language_name = language_match.group(1)
 
-        # 匹配代码段
-        code_pattern = r"```[\w-]*,?[\w-]*\s*\n(.+?\n)```\n"
-        code_matches = re.findall(code_pattern, string, re.DOTALL)
+        if string != '\n':
+            # 匹配代码段
+            code_pattern = r"```[\w-]*,?[\w-]*\s*\n(.+?\n)```\n"
+            code_matches = re.findall(code_pattern, string, re.DOTALL)
 
-        # 合并匹配到的内容
-        string = '\n'.join(code_matches) if code_matches else string
-        string = "```{}\n{}```\n".format(language_name, string)
+            # 合并匹配到的内容
+            string = '\n'.join(code_matches) if code_matches else string
+            string = "```{}\n{}```\n".format(language_name, string)
         
         pos = 0
         endpos = len(string)
