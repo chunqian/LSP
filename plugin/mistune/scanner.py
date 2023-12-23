@@ -92,14 +92,14 @@ class Matcher(object):
 
     def iter(self, string, state, parse_text):
         # 获取language
-        language_pattern = r"```(\w*)\s*\n.+?\n```\n"
+        language_pattern = r"```([\w-]*)\s*\n.+?\n```\n"
         language_match = re.search(language_pattern, string, re.DOTALL)
         language_name = ""
         if language_match:
             language_name = language_match.group(1)
 
         # 匹配代码段
-        code_pattern = r"```\w*,*\w*\s*\n(.+?\n)```\n"
+        code_pattern = r"```[\w-]*,?[\w-]*\s*\n(.+?\n)```\n"
         code_matches = re.findall(code_pattern, string, re.DOTALL)
 
         # 合并匹配到的内容
