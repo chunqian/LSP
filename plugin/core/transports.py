@@ -5,6 +5,8 @@ from .typing import Dict, Any, Optional, IO, Protocol, Generic, List, Callable, 
 from contextlib import closing
 from functools import partial
 from queue import Queue
+from .tinylog import tinylog as log
+
 import http
 import json
 import os
@@ -91,7 +93,7 @@ class JsonRpcProcessor(AbstractProcessor[Dict[str, Any]]):
 
     @staticmethod
     def _decode(message: bytes) -> Dict[str, Any]:
-        return json.loads(message.decode('utf-8'))
+        return json.loads(message.decode('utf-8', 'ignore'))
 
 
 class ProcessTransport(Transport[T]):
