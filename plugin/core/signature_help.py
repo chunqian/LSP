@@ -188,4 +188,4 @@ def _wrap_with_scope_style(view: sublime.View, content: str, scope: str, emphasi
     #     '; font-weight: bold; text-decoration: underline' if emphasize else '',
     #     html.escape(content, quote=False)
     # )
-    return content
+    return html.escape(content, quote=False)
