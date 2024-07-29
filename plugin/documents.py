@@ -50,6 +50,7 @@ from .session_view import SessionView
 from functools import partial
 from weakref import WeakSet
 from weakref import WeakValueDictionary
+from html.parser import HTMLParser
 import itertools
 import sublime
 import sublime_plugin
@@ -591,8 +592,23 @@ class DocumentSyncListener(sublime_plugin.ViewEventListener, AbstractViewListene
     def _on_sighelp_hide(self) -> None:
         self._sighelp = None
 
+    def url_decode(self, s, quote=True):
+        s = s.replace("%26", "&")
+        s = s.replace("%3C", "<")
+        s = s.replace("%3E", ">")
+        if quote:
+            s = s.replace('%22', '"')
+            s = s.replace("%27", "'")
+            s = s.replace("%60", "`")
+        return s
+
     def _on_sighelp_navigate(self, href: str) -> None:
-        webbrowser.open_new_tab(href)
+        # web浏览器
+        # webbrowser.open_new_tab(href)
+
+        # 控制台打印 Sighelp result
+        print(HTMLParser().unescape(self.url_decode(href)))
+        self.view.hide_popup()
 
     # --- textDocument/codeAction --------------------------------------------------------------------------------------
 

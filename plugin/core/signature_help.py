@@ -132,6 +132,8 @@ class SigHelp:
         else:
             formatted.append(_function(view, label))
         formatted.append("</pre></div>")
+
+        formatted.append('<p><a href=\'' + label + '\'>Code</a></p>\n')
         return formatted
 
     def _render_docs(self, view: sublime.View, signature: SignatureInformation) -> List[str]:
