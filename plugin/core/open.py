@@ -111,6 +111,8 @@ def open_file(
 
 
 def center_selection(v: sublime.View, r: Range) -> sublime.View:
+    # 改为区域的起始点 居中显示
+    r['end'] = r['start']
     selection = range_to_region(r, v)
     v.run_command("lsp_selection_set", {"regions": [(selection.a, selection.a)]})
     window = v.window()
