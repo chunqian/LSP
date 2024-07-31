@@ -97,6 +97,8 @@ class Matcher(object):
         language_name = ""
         if language_match:
             language_name = language_match.group(1)
+        else:
+            language_name = "undefined"
 
         line_pattern = r"^\n+$"
         if not re.match(line_pattern, string):

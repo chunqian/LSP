@@ -269,6 +269,16 @@ class BlockParser(ScannerParser):
 
         return list(self._scan(s, state, rules))
 
+    def _raw_decode(self, s, quote=True):
+        s = s.replace("&amp;", "&")
+        s = s.replace("&lt;", "<")
+        s = s.replace("&gt;", ">")
+        if quote:
+            s = s.replace('&quot;', '"')
+            s = s.replace("&apos;", "'")
+            s = s.replace("&#39;", "'")
+        return s
+
     def render(self, tokens, inline, state):
         data = self._iter_render(tokens, inline, state)
         return inline.renderer.finalize(data)
@@ -276,6 +286,8 @@ class BlockParser(ScannerParser):
     def _iter_render(self, tokens, inline, state):
         for tok in tokens:
             method = inline.renderer._get_method(tok['type'])
+            params = tok.get('params')
+
             if 'blank' in tok:
                 yield method()
                 continue
@@ -283,10 +295,13 @@ class BlockParser(ScannerParser):
             if 'children' in tok:
                 children = self.render(tok['children'], inline, state)
             elif 'raw' in tok:
-                children = tok['raw']
+                if params and len(params) != 0 and params[0] == "undefined":
+                    children = self._raw_decode(inline(tok['raw'], state))
+                else:
+                    children = tok['raw']
             else:
                 children = inline(tok['text'], state)
-            params = tok.get('params')
+
             if params:
                 yield method(children, *params)
             else:

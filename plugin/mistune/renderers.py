@@ -158,10 +158,13 @@ class HTMLRenderer(BaseRenderer):
     def strong(self, text):
         return '<strong>' + text + '</strong>'
 
+    # def codespan(self, text):
+    #     tag_name = 'code'
+    #     # return '<code>' + escape(text) + '</code>'
+    #     return '<' + tag_name + FONT_STYLE + '>' + escape(text) + '</code>'
+
     def codespan(self, text):
-        tag_name = 'code'
-        # return '<code>' + escape(text) + '</code>'
-        return '<' + tag_name + FONT_STYLE + '>' + escape(text) + '</code>'
+        return escape(text)
 
     def linebreak(self):
         return '<br />\n'
