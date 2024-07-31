@@ -180,18 +180,24 @@ class HTMLRenderer(BaseRenderer):
             return escape(html)
         return html
 
+    # def paragraph(self, text):
+    #     # 查找 h1 - h6
+    #     tag_names = ["h1", "h2", "h3", "h4", "h5", "h6"]
+    #     for tag_name in tag_names:
+    #         tag = '<' + tag_name + '>'
+    #         if tag in text:
+    #             text = text.replace(tag, '<' + tag_name + FONT_STYLE + '>')
+    #     return '<p>' + text + '</p>\n'
+
     def paragraph(self, text):
-        # 查找 h1 - h6
-        tag_names = ["h1", "h2", "h3", "h4", "h5", "h6"]
-        for tag_name in tag_names:
-            tag = '<' + tag_name + '>'
-            if tag in text:
-                text = text.replace(tag, '<' + tag_name + FONT_STYLE + '>')
-        return '<p>' + text + '</p>\n'
+        return '{}\n'.format(text)
+
+    # def heading(self, text, level):
+    #     tag_name = 'h' + str(level)
+    #     return '<' + tag_name + FONT_STYLE + '>' + text + '</' + tag_name + '>\n'
 
     def heading(self, text, level):
-        tag_name = 'h' + str(level)
-        return '<' + tag_name + FONT_STYLE + '>' + text + '</' + tag_name + '>\n'
+        return '{}\n'.format(text)
 
     def newline(self):
         return ''
