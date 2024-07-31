@@ -152,11 +152,17 @@ class HTMLRenderer(BaseRenderer):
             s += ' title="' + escape_html(title) + '"'
         return s + ' />'
 
+    # def emphasis(self, text):
+    #     return '<em>' + text + '</em>'
+
     def emphasis(self, text):
-        return '<em>' + text + '</em>'
+        return text
+
+    # def strong(self, text):
+    #     return '<strong>' + text + '</strong>'
 
     def strong(self, text):
-        return '<strong>' + text + '</strong>'
+        return text
 
     # def codespan(self, text):
     #     tag_name = 'code'

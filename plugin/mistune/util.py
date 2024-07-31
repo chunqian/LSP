@@ -3,7 +3,7 @@ from html.parser import HTMLParser
 import html
 
 
-PUNCTUATION = r'''\\!"#$%&'()*+,./:;<=>?@\[\]^`{}|_~-'''
+PUNCTUATION = r'''\\!"#$%&'()*+,./:;<=>?@\[\]^`{}|_~-’'''
 ESCAPE_TEXT = r'\\[' + PUNCTUATION + ']'
 
 

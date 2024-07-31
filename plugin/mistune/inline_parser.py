@@ -67,13 +67,8 @@ class InlineParser(ScannerParser):
         r'(?:(?:(?<!\\)(?:\\\\)*\*)|[^*])+?'
         r')(?<!\\)\1'
     )
-    # UNDERSCORE_EMPHASIS = (
-    #     r'\b(_{1,2})(?=[^\s_])([\s\S]*?'
-    #     r'(?:' + ESCAPE_TEXT + r'|[^\s_]))\1'
-    #     r'(?!_|[^\s' + PUNCTUATION + r'])\b'
-    # )
     UNDERSCORE_EMPHASIS = (
-        r'\b(_{2,2})(?=[^\s_])([\s\S]*?'
+        r'\b(_{1,2})(?=[^\s_])([\s\S]*?'
         r'(?:' + ESCAPE_TEXT + r'|[^\s_]))\1'
         r'(?!_|[^\s' + PUNCTUATION + r'])\b'
     )

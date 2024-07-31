@@ -1,4 +1,5 @@
 import re
+from html.parser import HTMLParser
 from .scanner import ScannerParser, Matcher
 from .inline_parser import ESCAPE_CHAR, LINK_LABEL
 from .util import unikey
@@ -269,16 +270,6 @@ class BlockParser(ScannerParser):
 
         return list(self._scan(s, state, rules))
 
-    def _raw_decode(self, s, quote=True):
-        s = s.replace("&amp;", "&")
-        s = s.replace("&lt;", "<")
-        s = s.replace("&gt;", ">")
-        if quote:
-            s = s.replace('&quot;', '"')
-            s = s.replace("&apos;", "'")
-            s = s.replace("&#39;", "'")
-        return s
-
     def render(self, tokens, inline, state):
         data = self._iter_render(tokens, inline, state)
         return inline.renderer.finalize(data)
@@ -296,7 +287,7 @@ class BlockParser(ScannerParser):
                 children = self.render(tok['children'], inline, state)
             elif 'raw' in tok:
                 if params and len(params) != 0 and params[0] == "undefined":
-                    children = self._raw_decode(inline(tok['raw'], state))
+                    children = HTMLParser().unescape(inline(tok['raw'], state))
                 else:
                     children = tok['raw']
             else:
