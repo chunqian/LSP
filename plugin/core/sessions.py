@@ -1037,7 +1037,7 @@ def get_plugin(name: str) -> Optional[Type[AbstractPlugin]]:
     # log.info("Language Server Plugins: {}", _plugins)
     tup = _plugins.get(name, None)
     if tup:
-        log.info("Language Server Plugin: {} Loaded", tup[0])
+        log.info("LSP Plugin Loaded: {}", tup[0])
     return tup[0] if tup else None
 
 
