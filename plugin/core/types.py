@@ -672,6 +672,14 @@ class ClientConfig:
         self.path_maps = path_maps
         self.status_key = "lsp_{}".format(self.name)
         self.semantic_tokens = semantic_tokens
+        self.plugin_name = ""
+        if "source.java" in self.selector:
+            self.plugin_name = "java-langserver"
+        elif "source.rust" in self.selector:
+            self.plugin_name = "rust-langserver"
+        for command_arg in self.command:
+            if command_arg == "deno":
+                self.plugin_name = "deno-langserver"
 
     @classmethod
     def from_sublime_settings(cls, name: str, s: sublime.Settings, file: str) -> "ClientConfig":

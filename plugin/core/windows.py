@@ -244,7 +244,8 @@ class WindowManager(Manager):
             return
         try:
             workspace_folders = sorted_workspace_folders(self._workspace.folders, file_path)
-            plugin_class = get_plugin(config.name)
+            # plugin_class = get_plugin(config.name)
+            plugin_class = get_plugin(config.plugin_name)
             variables = extract_variables(self._window)
             cwd = None  # type: Optional[str]
             if plugin_class is not None:
